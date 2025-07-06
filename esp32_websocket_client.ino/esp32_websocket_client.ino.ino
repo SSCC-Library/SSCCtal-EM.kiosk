@@ -54,4 +54,15 @@ void setup() {
 
 void loop() {
   webSocket.loop();
+
+  // 사용자 입력 감지
+  if (Serial.available() > 0) {
+    String inputStr = Serial.readStringUntil('\n');
+    inputStr.trim();  // 개행 등 공백 제거
+    if (inputStr.length() > 0) {
+      webSocket.sendTXT(inputStr.c_str());
+      Serial.print("[WSc] Sent user input: ");
+      Serial.println(inputStr);
+    }
+  }
 }
